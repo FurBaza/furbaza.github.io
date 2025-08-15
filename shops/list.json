@@ -1,0 +1,22 @@
+[
+  {
+    "name": "WolfCraft Moscow",
+    "city": "Москва",
+    "url": "shops/moscow.html",
+    "image": "photo/wolfcraft.png",
+    "description": "Полный фурсьют под ключ.",
+    "price": 45000,
+    "top": true,
+    "rating": 4.2
+  },
+  {
+    "name": "FoxDen SPB",
+    "city": "Санкт-Петербург",
+    "url": "shops/spb.html",
+    "image": "photo/foxden.png",
+    "description": "Частичные фурсьюты и морды.",
+    "price": 30000,
+    "top": false,
+    "rating": 3.8
+  }
+]

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoxDen SPB</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{--bg:#0b0c0f;--panel:#151820;--ring:rgba(255,255,255,.08);--text:#f6f7fb}
+html,body{background:var(--bg);color:var(--text)}
+.card{background:var(--panel);border:1px solid var(--ring);border-radius:18px;overflow:hidden;
+      box-shadow:0 10px 24px rgba(0,0,0,.25);transform:translateY(8px);opacity:0;
+      animation:cardIn .5s ease both;}
+@keyframes cardIn{to{transform:translateY(0);opacity:1}}
+.card:hover{transform:translateY(-3px) scale(1.01);transition:.25s ease}
+.btn{border-radius:12px;padding:.5rem 1rem;font-weight:700;background:#1f6feb;box-shadow:0 6px 20px rgba(31,111,235,.25)}
+.btn:hover{transform:translateY(-2px);filter:brightness(1.05)}
+.btn-secondary{border-radius:12px;padding:.5rem 1rem;background:#222630;border:1px solid var(--ring)}
+.control{background:#0f131a;border:1px solid var(--ring);border-radius:14px;padding:.65rem 1rem}
+.star{width:20px;height:20px;display:inline-block;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox=\'0 0 24 24\'><path fill=\'#fff\' d=\'M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z\'/></svg>') no-repeat center / contain;background:#3b82f6;margin-right:2px;transition:transform .2s}
+.star.pulse{animation: twinkle 900ms ease}
+@keyframes twinkle{50%{transform:scale(1.2) rotate(-3deg)}}
+.price{color:#34d399;font-weight:800}
+</style>
+</head>
+<body class="max-w-3xl mx-auto px-4 py-8">
+  <a href="../index.html" class="btn-secondary inline-block mb-6">← Назад</a>
+  <article class="card">
+    <img src="../photo/foxden.png" alt="FoxDen SPB" class="w-full h-64 object-cover">
+    <div class="p-5">
+      <h1 class="text-2xl font-extrabold">FoxDen SPB</h1>
+      <div class="opacity-80 mt-1">Санкт-Петербург</div>
+      <p class="mt-3 opacity-90">Частичные фурсьюты и морды.</p>
+      <div class="price text-xl mt-2">от 30000 ₽</div>
+
+      <div class="mt-4">
+        <div class="flex items-center gap-2">
+          <div id="stars" class="flex"></div>
+          <span id="val" class="text-sm opacity-80"></span>
+        </div>
+        <div class="mt-2 flex items-center gap-2">
+          <input id="inp" type="number" min="0" max="5" step="0.1" class="control w-24" placeholder="0–5">
+          <button id="btn" class="btn-secondary px-3 py-2">Поставить рейтинг</button>
+        </div>
+      </div>
+    </div>
+  </article>
+
+<script>
+
+function renderStars(el, value){
+  const max=5;
+  const whole=Math.floor(value);
+  const frac=value - whole;
+  el.innerHTML='';
+  for(let i=0;i<max;i++){
+    const s=document.createElement('span');
+    s.className='star';
+    if(i<whole){ s.style.opacity=1; }
+    else if(i===whole && frac>0){ s.style.background='linear-gradient(90deg,#3b82f6 '+(frac*100)+'%, rgba(255,255,255,.15) '+(frac*100)+'%)'; }
+    else{ s.style.background='rgba(255,255,255,.15)'; }
+    el.appendChild(s);
+  }
+}
+
+const name_ = "FoxDen SPB";
+function getSaved(name, fallback){
+  const map = JSON.parse(localStorage.getItem('ratings')||'{}');
+  return map[name] ?? fallback ?? 0;
+}
+function save(name, v){
+  const map = JSON.parse(localStorage.getItem('ratings')||'{}');
+  map[name] = v; localStorage.setItem('ratings', JSON.stringify(map));
+}
+const stars = document.getElementById('stars');
+const val = document.getElementById('val');
+const inp = document.getElementById('inp');
+const btn = document.getElementById('btn');
+let cur = parseFloat(getSaved(name_, 3.8)) || 0;
+function draw(){ renderStars(stars, cur); val.textContent = cur.toFixed(1); }
+draw();
+btn.addEventListener('click', ()=>{ const v=parseFloat(inp.value); if(!isNaN(v)){ cur=Math.max(0,Math.min(5,v)); save(name_,cur); draw(); } });
+</script>
+</body>
+</html>
