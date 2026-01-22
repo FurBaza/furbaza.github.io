@@ -127,14 +127,14 @@ margin-top:-48px;
 padding:0 16px 16px;
 text-align:center;
 position:relative;
-z-index:5; /* АВАТАР ВСЕГДА СВЕРХУ */
+z-index:5; 
 }
 
 .admin-info img{
 width:96px;
 height:96px;
 border-radius:50%;
-border:3px solid var(--accent); /* фиолетовый круг */
+border:3px solid var(--accent); 
 object-fit:cover;
 background:var(--card);
 }
@@ -320,12 +320,10 @@ function closeAdmin(){
     modal.classList.remove("active")
 }
 
-/* accordion click */
 document.querySelectorAll(".accordion-header").forEach(h => {
     h.onclick = () => h.parentElement.classList.toggle("active")
 })
 
-/* AUTO OPEN + SCROLL RULES */
 function openRulesIfHash() {
     if (location.hash === "#rules") {
         const rules = document.getElementById("rules")
@@ -340,6 +338,7 @@ window.addEventListener("hashchange", openRulesIfHash)
 
 </body>
 </html>
+
 
 
 
